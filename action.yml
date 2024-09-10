@@ -4,6 +4,10 @@ branding:
   icon: "crop"
   color: "blue"
 inputs:
+  remove-older-xcode:
+    description: "Removes older versions of XCode. (frees several GBs)"
+    required: false
+    default: "false"
   remove-dotnet:
     description: "Removes .NET runtime and libraries. (frees ~2 GB)"
     required: false
@@ -59,6 +63,9 @@ runs:
         if [[ ${{ inputs.remove-dotnet }} == 'true' ]]; then
           echo -n "dotnet "
         fi
+        if [[ ${{ inputs.remove-older-xcode }} == 'true' ]]; then
+          echo -n "xcode "
+        fi
         if [[ ${{ inputs.remove-android }} == 'true' ]]; then
           echo -n "android "
         fi
@@ -90,6 +97,10 @@ runs:
         echo "Removing unwanted software... "
         if [[ ${{ inputs.remove-dotnet }} == 'true' ]]; then
           sudo rm -rf ${verbose} /usr/share/dotnet
+        fi
+        if [[ ${{ inputs.remove-older-xcode }} == 'true' ]]; then
+          find /Applications/ -name "Xcode*" | grep -v "beta" | sort -r | tail --lines=+2 | xargs rm -rf
+          find /Applications/ -name "Xcode*beta*" | xargs rm -rf
         fi
         if [[ ${{ inputs.remove-android }} == 'true' ]]; then
           sudo rm -rf ${verbose} /usr/local/lib/android
