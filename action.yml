@@ -4,10 +4,10 @@ branding:
   icon: "crop"
   color: "blue"
 inputs:
-  remove-older-xcode:
-    description: "Removes older versions of XCode. (frees several GBs)"
+  selected-xcode-version:
+    description: "Selects an Xcode version and removes all others. (frees lots of GBs)"
     required: false
-    default: "false"
+    default: ""
   remove-dotnet:
     description: "Removes .NET runtime and libraries. (frees ~2 GB)"
     required: false
@@ -98,9 +98,15 @@ runs:
         if [[ ${{ inputs.remove-dotnet }} == 'true' ]]; then
           sudo rm -rf ${verbose} /usr/share/dotnet
         fi
-        if [[ ${{ inputs.remove-older-xcode }} == 'true' ]]; then
-          find /Applications -name "Xcode*" -maxdepth 1 -mindepth 1 | grep -v "beta" | sort -r | tail --lines=+2 | xargs rm -rf
-          find /Applications -name "Xcode*beta*" -maxdepth 1 -mindepth 1 | xargs rm -rf
+        if [[ ${{ inputs.selected-xcode-version }} != '' ]]; then
+          echo "Searching for Xcode versions:"
+          find /Applications -name "Xcode_*" -maxdepth 1 -mindepth 1
+          echo "Removing old Xcode versions..."
+          find /Applications -name "Xcode_*" -maxdepth 1 -mindepth 1 | grep -v ${{ inputs.selected-xcode-version }} | xargs rm -rf
+          echo "Available Xcode versions after removal:"
+          find /Applications -name "Xcode_*" -maxdepth 1 -mindepth 1
+          echo "Selecting Xcode version: ${{ inputs.selected-xcode-version }}"
+          sudo xcode-select -s "/Applications/Xcode_${{ inputs.selected-xcode-version }}.app"
         fi
         if [[ ${{ inputs.remove-android }} == 'true' ]]; then
           sudo rm -rf ${verbose} /usr/local/lib/android
