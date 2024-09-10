@@ -63,9 +63,6 @@ runs:
         if [[ ${{ inputs.remove-dotnet }} == 'true' ]]; then
           echo -n "dotnet "
         fi
-        if [[ ${{ inputs.remove-older-xcode }} == 'true' ]]; then
-          echo -n "xcode "
-        fi
         if [[ ${{ inputs.remove-android }} == 'true' ]]; then
           echo -n "android "
         fi
