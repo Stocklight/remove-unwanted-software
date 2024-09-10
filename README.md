@@ -57,9 +57,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Maximize build space
-        uses: AdityaGarg8/remove-unwanted-software@v4.1
+        uses: Stocklight/remove-unwanted-software@v4.1
         with:
-          remove-android: 'true'
+          remove-android: "true"
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -74,42 +74,42 @@ jobs:
 All inputs are optional and default to the following, gaining about 7-8 GB additional space.
 
 ```yaml
-  remove-dotnet:
-    description: 'Removes .NET runtime and libraries. (frees ~2 GB)'
-    required: false
-    default: 'false'
-  remove-android:
-    description: 'Removes Android SDKs and Tools. (frees ~9 GB)'
-    required: false
-    default: 'false'
-  remove-haskell:
-    description: 'Removes GHC (Haskell) artifacts. (frees ~5.2 GB)'
-    required: false
-    default: 'false'
-  remove-codeql:
-    description: 'Removes CodeQL Action Bundles. (frees ~5.4 GB)'
-    required: false
-    default: 'false'
-  remove-docker-images:
-    description: 'Removes cached Docker images. (frees ~3.2 GB)'
-    required: false
-    default: 'false'
-  remove-large-packages:
-    description: 'Removes unwanted large Apt packages. (frees ~3.1 GB)'
-    required: false
-    default: 'false'
-  remove-cached-tools:
-    description: 'Removes cached tools used by setup actions by GitHub. (frees ~8.3 GB)'
-    required: false
-    default: 'false'
-  remove-swapfile:
-    description: 'Removes the Swapfile. (frees ~4 GB)'
-    required: false
-    default: 'false'
-  verbose:
-    description: 'Enables detailed logging of the action'
-    required: false
-    default: 'false' 
+remove-dotnet:
+  description: "Removes .NET runtime and libraries. (frees ~2 GB)"
+  required: false
+  default: "false"
+remove-android:
+  description: "Removes Android SDKs and Tools. (frees ~9 GB)"
+  required: false
+  default: "false"
+remove-haskell:
+  description: "Removes GHC (Haskell) artifacts. (frees ~5.2 GB)"
+  required: false
+  default: "false"
+remove-codeql:
+  description: "Removes CodeQL Action Bundles. (frees ~5.4 GB)"
+  required: false
+  default: "false"
+remove-docker-images:
+  description: "Removes cached Docker images. (frees ~3.2 GB)"
+  required: false
+  default: "false"
+remove-large-packages:
+  description: "Removes unwanted large Apt packages. (frees ~3.1 GB)"
+  required: false
+  default: "false"
+remove-cached-tools:
+  description: "Removes cached tools used by setup actions by GitHub. (frees ~8.3 GB)"
+  required: false
+  default: "false"
+remove-swapfile:
+  description: "Removes the Swapfile. (frees ~4 GB)"
+  required: false
+  default: "false"
+verbose:
+  description: "Enables detailed logging of the action"
+  required: false
+  default: "false"
 ```
 
 [easimon/maximize-build-space]: https://github.com/easimon/maximize-build-space
